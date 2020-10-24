@@ -2,11 +2,13 @@
 <html>
     <head>Login to Ridham</head>
     <body>
-        <form enctype="multipart/form-data" method="GET" autocomplete="on" action='/app/login'>
+        <form enctype="multipart/form-data" method="POST" autocomplete="on" action='/app/login'>
             {% csrf_token %}
             <input type="text" name="username">
             <input type="password" name='password'>
             <input type="submit" value="submit">
+            <input type="hidden" name="lgtry" value=1>
+
         </form>
         <a href="{% url 'login_module:forgotPassword' %}">Forgot Password</a>
         <a href="{% url 'login_module:createUserAccount' %}">Create a New Account</a>
