@@ -2,21 +2,11 @@ from django.http import request
 from django.shortcuts import render
 
 # Create your views here.
-def loginForm(request):
+def login(request):
     return render(request, 'login_module/loginFile.html')
 
-def loginAction(request):
-    
-    pass
+def forgotPassword(request):
+    return render(request, 'login_module/forgotPassword.html')
 
-def forgotPassAction(request):
-    pass
-
-def createUserAction(request):
-    pass
-
-def createUserView(request):
-    pass
-
-def forgotPassView(request):
-    pass
+def createUserAccount(request):
+    return render(request, 'login_module/createAcc.html')

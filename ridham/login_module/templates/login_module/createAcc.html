@@ -9,7 +9,7 @@
             <input type="email" name='emailid'>
             <input type="submit" value="submit">
         </form>
-        <a href="">Forgot Password</a>
-        <a href="">Already have an account ?</a>
+        <a href="{% url 'login_module:login' %}">Already have an account ?</a>
+        <a href="{% url 'login_module:forgotPassword' %}">Forgot Password</a>
     </body>
 </html>
