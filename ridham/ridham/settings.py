@@ -79,8 +79,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME' : 'ridham_user_login_data',
-        'USER' : 'ridham_app',
-        'PASSWORD' : 'sample_pass',
+        'USER' : 'root',
+        'PASSWORD' : 'gta5GTA5',
         'HOST' : 'localhost',
         'OPTIONS': {
                 'init_command': 'SET default_storage_engine=INNODB',
