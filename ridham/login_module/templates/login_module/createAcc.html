@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+    <head>Signup for Ridham</head>
+    <body>
+        <form enctype="multipart/form-data" method="POST" autocomplete="on">
+            {% csrf_token %}
+            <input type="text" name="username">
+            <input type="password" name='password'>
+            <input type="email" name='emailid'>
+            <input type="submit" value="submit">
+        </form>
+        <a href="">Forgot Password</a>
+        <a href="">Already have an account ?</a>
+    </body>
+</html>
