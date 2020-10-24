@@ -8,6 +8,8 @@
             <input type="password" name='password'>
             <input type="email" name='emailid'>
             <input type="submit" value="submit">
+            <input type="hidden" name="signup" value=1>
+
         </form>
         <a href="{% url 'login_module:login' %}">Already have an account ?</a>
         <a href="{% url 'login_module:forgotPassword' %}">Forgot Password</a>
