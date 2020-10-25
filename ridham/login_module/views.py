@@ -12,7 +12,7 @@ from .decorators import unauthenticated_user, allowed_users, admins_only
 my 3 wrappers -> @unauthenticated_user, @allowed_users, @admins_only
 '''
 
-@unaunthenticated_user
+@unauthenticated_user
 def register(request):
     form = CreateUserForm()
 
