@@ -1,30 +1,74 @@
-from django.http import request
-from django.shortcuts import render
+from django.http import request, HttpResponse
+from django.shortcuts import render, redirect
+from django.contrib.auth.forms import UserCreationForm
 from .models import User, LoginHistory
-def login(request):
-    if request.method == 'GET':
-        return render(request, 'login_module/loginFile.html')
-    else:
-        try:
-            lgtry = request.POST['lgtry']
-        except:
-            return render(request, 'login_module/loginFile.html')
-        if lgtry[0] == '1':
-            userInputUserName = request.POST['username']
-            userInputPassword = request.POST['password']
-            print(userInputPassword, userInputUserName)
-            #TODO : Proper Exception Handling for invalid cases
-            try:
-                user = User.objects.get(userName=userInputUserName, passWord=userInputPassword)
-            except User.DoesNotExist:
-                return render(request, 'login_module/loginFile.html')
-            return render(request, 'login_module/loginSuccess.html')
+from .forms import CreateUserForm, ForgotForm
+from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from .decorators import unauthenticated_user, allowed_users, admins_only
 
+'''
+my 3 wrappers -> @unauthenticated_user, @allowed_users, @admins_only
+'''
+
+@unauthenticated_user
+def register(request):
+    form = CreateUserForm()
+
+    if(request.method == "POST"):
+        form = UserCreationForm(request.POST)
+        
+        if form.is_valid():
+            ##make email primary as well
+            form.save()
+            uname = form.cleaned_data('username')
+            messages.success(request, "Account successfully created for "+uname+" !")
+            return redirect('login_module:login')
+    
+
+    context = {'form' : form }
+    return render(request, 'login_module/createAcc.html', context)
+
+@unauthenticated_user
+def loginPage(request):
+    if request.method == "POST":
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+            return redirect('login_module:dashboard')
         else:
-            return render(request, 'login_module/loginFile.html')
+            messages.info(request, "Username or Password is incorrect! :( ")
+
+    context = {}
+    return render(request, 'login_module/LoginFile.html', context)
+
+@login_required(login_url='login_module:login')
+def dashboard(request):
+    context = {}
+    return render(request, 'login_module/HomePage.html', context)
+
+def logoutUser(request):
+    logout(request)
+    return redirect('login_module:login')
 
 def forgotPassword(request):
-    return render(request, 'login_module/forgotPassword.html')
-
-def createUserAccount(request):
-    return render(request, 'login_module/createAcc.html')
+    if request.user.is_authenticated:
+        return redirect('login_module:dashboard')
+    else:
+        if request.method == "POST":
+            username = request.POST.get('username')
+            email = request.POST.get('email')
+            ##write code for sending an email
+            forgotten = User.objects.filter(username=username, email=email)
+            if forgotten is not None:
+                messages.info(request, "An email has been sent!")
+                return redirect('login_module:login')
+            else:
+                messages.info(request, "There is no such account :(")
+        form = ForgotForm()
+        context = {'form' : form}
+        return render(request, 'login_module/forgotPassword.html', context)
