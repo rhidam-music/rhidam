@@ -22,10 +22,13 @@ def register(request):
         
         if form.is_valid():
             ##make email primary as well
+
             user = form.save()
+            # gp = Group.objects.get(name='customer')
+            # user.group.add(gp)
+            uname = user.username
             
-            uname = form.cleaned_data('username')
-            messages.success(request, "Account successfully created for "+uname+" !")
+            messages.success(request, "Account successfully created " +uname+   " !")
             return redirect('login_module:login')
     
 
@@ -46,7 +49,7 @@ def loginPage(request):
             messages.info(request, "Username or Password is incorrect! :( ")
 
     context = {}
-    return render(request, 'login_module/LoginFile.html', context)
+    return render(request, 'login_module/loginFile.html', context)
 
 @login_required(login_url='login_module:login')
 def dashboard(request):
