@@ -6,43 +6,45 @@ from .forms import CreateUserForm, ForgotForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from .decorators import unauthenticated_user, allowed_users, admins_only
 
+'''
+my 3 wrappers -> @unauthenticated_user, @allowed_users, @admins_only
+'''
 
+@unaunthenticated_user
 def register(request):
-    if request.user.is_authenticated:
-        return redirect('login_module:dashboard')
-    else:
-        form = CreateUserForm()
-        if(request.method == "POST"):
-            form = UserCreationForm(request.POST)
-            if form.is_valid():
-                form.save()
-                uname = form.cleaned_data('username')
-                messages.success(request, "Account successfully created for "+uname+" !")
-                return redirect('login_module:login')
+    form = CreateUserForm()
+
+    if(request.method == "POST"):
+        form = UserCreationForm(request.POST)
+        
+        if form.is_valid():
+            ##make email primary as well
+            form.save()
+            uname = form.cleaned_data('username')
+            messages.success(request, "Account successfully created for "+uname+" !")
+            return redirect('login_module:login')
     
 
     context = {'form' : form }
     return render(request, 'login_module/createAcc.html', context)
 
+@unauthenticated_user
 def loginPage(request):
-    if request.user.is_authenticated:
-        return redirect('login_module:dashboard')
-    else:
-        if request.method == "POST":
-            username = request.POST.get('username')
-            password = request.POST.get('password')
-            user = authenticate(request, username=username, password=password)
+    if request.method == "POST":
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
 
-            if user is not None:
+        if user is not None:
+            login(request, user)
+            return redirect('login_module:dashboard')
+        else:
+            messages.info(request, "Username or Password is incorrect! :( ")
 
-                login(request, user)
-                return redirect('login_module:dashboard')
-            else:
-                messages.info(request, "Username or Password is incorrect! :( ")
-
-        context = {}
-        return render(request, 'login_module/LoginFile.html', context)
+    context = {}
+    return render(request, 'login_module/LoginFile.html', context)
 
 @login_required(login_url='login_module:login')
 def dashboard(request):
