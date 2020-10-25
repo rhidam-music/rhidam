@@ -24,9 +24,10 @@ def register(request):
             ##make email primary as well
 
             user = form.save()
-            # gp = Group.objects.get(name='customer')
-            # user.group.add(gp)
+            gp = Group.objects.get(name='customer')
+            user.groups.add(gp)
             uname = user.username
+            
             
             messages.success(request, "Account successfully created " +uname+   " !")
             return redirect('login_module:login')
