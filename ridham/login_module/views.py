@@ -6,6 +6,7 @@ from .forms import CreateUserForm, ForgotForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import Group
 from .decorators import unauthenticated_user, allowed_users, admins_only
 
 '''
@@ -21,7 +22,8 @@ def register(request):
         
         if form.is_valid():
             ##make email primary as well
-            form.save()
+            user = form.save()
+            
             uname = form.cleaned_data('username')
             messages.success(request, "Account successfully created for "+uname+" !")
             return redirect('login_module:login')
