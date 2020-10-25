@@ -1,16 +1,48 @@
 <!DOCTYPE html>
 <html>
-    <head>Login to Ridham</head>
+    <head>Ridham</head>
     <body>
-        <form enctype="multipart/form-data" method="POST" autocomplete="on" action='/app/login'>
-            {% csrf_token %}
-            <input type="text" name="username">
-            <input type="password" name='password'>
-            <input type="submit" value="submit">
-            <input type="hidden" name="lgtry" value=1>
-
-        </form>
-        <a href="{% url 'login_module:forgotPassword' %}">Forgot Password</a>
-        <a href="{% url 'login_module:createUserAccount' %}">Create a New Account</a>
+        <div class="container h-100">
+            <div class="d-flex justify-content-center h-100">
+                <div class="user_card">
+                    <div class="d-flex justify-content-center">
+    
+    
+                        <h3 id="form-title">WELCOME TO RIDHAM</h3>
+                    </div>
+                    <div class="d-flex justify-content-center form_container">
+                        <form method="POST" action="">
+                            {% csrf_token %}
+                            <div class="input-group mb-3">
+                                <div class="input-group-append">
+                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                </div>
+                                <input type="text" name="username" placeholder="Username..." class="form-control">
+                            </div>
+                            <div class="input-group mb-2">
+                                <div class="input-group-append">
+                                    <span class="input-group-text"><i class="fas fa-key"></i></span>
+                                </div>
+                                    <input type="password" name="password" placeholder="Password..." class="form-control" >
+                            </div>
+    
+                                <div class="d-flex justify-content-center mt-3 login_container">
+                                     <input class="btn login_btn" type="submit" value="Login">
+                                   </div>
+                        </form>
+    
+                    </div>
+                    {% for message in messages %}
+                        <p id="messages"> { message } </p>
+                    {% endfor %}
+                    <div class="mt-4">
+                        <div class="d-flex justify-content-center links">
+                            Don't have an account? <a href="{% url 'login_module:register' %}" class="ml-2">Sign Up</a>
+                        </div>
+                
+                    </div>
+                </div>
+            </div>
+        </div>
     </body>
 </html>
