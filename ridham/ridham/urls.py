@@ -18,6 +18,7 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('dashboard/', include('core_app.urls')),
     path('app/', include('login_module.urls'))
 
 ]
