@@ -18,7 +18,7 @@ def register(request):
     form = CreateUserForm()
 
     if(request.method == "POST"):
-        form = UserCreationForm(request.POST)
+        form = CreateUserForm(request.POST)
         
         if form.is_valid():
             ##make email primary as well
