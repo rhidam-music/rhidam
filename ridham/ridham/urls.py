@@ -15,10 +15,27 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.contrib.auth import views as auth_views
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('dashboard/', include('core_app.urls')),
     path('app/', include('login_module.urls'))
+    path('accounts/', include('login_module.urls')),
 
+    ##forgot password build 
+    # 1. submit email form --> PasswordResetView.as_view()
+    # 2. email sent success message --> PasswordResetDoneView.as_view()
+    # 3. link to password reset form --> PasswordResetConfirmView.as_view()
+    # 4. password successfully changed --> PasswordResetCompleteView.as_view()
+
+    path('reset_password/', 
+    auth_views.PasswordResetView.as_view(template_name = "login_module/resetPassword.html"), 
+    name='reset_password'),
+
+    path('reset_password_sent/',
+     auth_views.PasswordResetDoneView.as_view(), name='password_reset_done'),
+    path('reset/<slug:uidb64>/<slug:token>/', auth_views.PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
+    path('reset_password_complete/', auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
 ]

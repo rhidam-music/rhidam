@@ -16,24 +16,22 @@ my 3 wrappers -> @unauthenticated_user, @allowed_users, @admins_only
 @unauthenticated_user
 def register(request):
     form = CreateUserForm()
-
-    if request.method == "POST":
+    if(request.method == "POST"):
         form = CreateUserForm(request.POST)
-        
         if form.is_valid():
-            ##make email primary as well
-
-            user = form.save()
-            gp = Group.objects.get(name='customer')
-            user.groups.add(gp)
-            uname = user.username
-            
-            
-            messages.success(request, "Account successfully created " +uname+   " !")
-            return redirect('login_module:login')
+            try:
+                user = form.save()
+                gp = Group.objects.get(name='customer')
+                user.groups.add(gp)
+                uname = user.username
+                messages.success(request, "Account successfully created for " +uname+   " !")
+                return redirect('login_module:login')
+            except:
+                messages.info("There is already an account with this email id! ")
+                return redirect('login_module:register')
     
 
-    context = {'form' : form }
+    context = {'form' : form}
     return render(request, 'login_module/createAcc.html', context)
 
 @unauthenticated_user
@@ -60,21 +58,3 @@ def dashboard(request):
 def logoutUser(request):
     logout(request)
     return redirect('login_module:login')
-
-def forgotPassword(request):
-    if request.user.is_authenticated:
-        return redirect('core_app:dashboard')
-    else:
-        if request.method == "POST":
-            username = request.POST.get('username')
-            email = request.POST.get('email')
-            ##write code for sending an email
-            forgotten = User.objects.filter(username=username, email=email)
-            if forgotten is not None:
-                messages.info(request, "An email has been sent!")
-                return redirect('login_module:login')
-            else:
-                messages.info(request, "There is no such account :(")
-        form = ForgotForm()
-        context = {'form' : form}
-        return render(request, 'login_module/forgotPassword.html', context)
