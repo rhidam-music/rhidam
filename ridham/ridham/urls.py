@@ -21,7 +21,6 @@ from django.contrib.auth import views as auth_views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('dashboard/', include('core_app.urls')),
-    path('app/', include('login_module.urls'))
     path('accounts/', include('login_module.urls')),
 
     ##forgot password build 
