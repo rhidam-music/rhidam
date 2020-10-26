@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <head>Rhidam</head>
+    <body>
+        Welcome to Rhidam - Core App
+
+        <a href="{% url 'login_module:logout' %}">LogOut {{ logged_in_user_username }}</a><br>
+        {% for message in messages %}
+        <p id="messages"> {{message}} </p>
+        {% endfor %}
+
+        {% if songs_list %}
+            <ul>
+                {% for song in songs_list %}
+                    <li><a href="{{ song.songLink }}">{{ song.songName }}</a></li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No songs uploaded</p>
+        {% endif %}
+        <form enctype="multipart/form-data" method="POST">
+            {% csrf_token %}
+            {{form.as_p}}
+            <input type="hidden" value="1" name="songup">
+            <input type="submit" value="Upload Song">
+        </form>
+    </body>
+</html>

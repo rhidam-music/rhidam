@@ -1,7 +1,7 @@
 from django.http import request, HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
-from .models import User, LoginHistory
+from .models import User
 from .forms import CreateUserForm, ForgotForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -17,7 +17,7 @@ my 3 wrappers -> @unauthenticated_user, @allowed_users, @admins_only
 def register(request):
     form = CreateUserForm()
 
-    if(request.method == "POST"):
+    if request.method == "POST":
         form = CreateUserForm(request.POST)
         
         if form.is_valid():
@@ -45,9 +45,9 @@ def loginPage(request):
 
         if user is not None:
             login(request, user)
-            return redirect('login_module:dashboard')
+            return redirect('core_app:dashboard')
         else:
-            messages.info(request, "Username or Password is incorrect! :( ")
+            messages.info(request, "Invalid username or Password")
 
     context = {}
     return render(request, 'login_module/loginFile.html', context)
@@ -55,7 +55,7 @@ def loginPage(request):
 @login_required(login_url='login_module:login')
 def dashboard(request):
     context = {}
-    return render(request, 'login_module/HomePage.html', context)
+    return render(request, 'core_app/dashboard.html', context)
 
 def logoutUser(request):
     logout(request)
@@ -63,7 +63,7 @@ def logoutUser(request):
 
 def forgotPassword(request):
     if request.user.is_authenticated:
-        return redirect('login_module:dashboard')
+        return redirect('core_app:dashboard')
     else:
         if request.method == "POST":
             username = request.POST.get('username')

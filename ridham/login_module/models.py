@@ -21,23 +21,6 @@ def create_user_profile(sender, instance, created, **kwargs):
 def save_user_profile(sender, instance, **kwargs):
     instance.profile.save()
 
-
-class Song(models.Model):
-    owner = models.ForeignKey(Profile, on_delete=models.CASCADE)
-    songName = models.CharField(max_length=64)
-    songLink = models.CharField(max_length=512)
-
-    def __str__(self) -> str:
-        return self.songName
-
-class LoginHistory(models.Model):
-    loginTime = models.DateTimeField()
-    userName = models.CharField(max_length=32)
-    loginIp = models.CharField(max_length=20)
-    def __str__(self) -> str:
-        return self.userName
-
 class Forgot(models.Model):
     username = models.CharField(max_length=150)
     email = models.EmailField(blank=False)
-
