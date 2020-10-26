@@ -22,6 +22,9 @@ def register(request):
         
         if form.is_valid():
             ##make email primary as well
+            email = form.cleaned_data.get('email')
+            
+            # already_existing_user = User.objects.filter(email = email)
 
             user = form.save()
             gp = Group.objects.get(name='customer')
@@ -29,7 +32,7 @@ def register(request):
             uname = user.username
             
             
-            messages.success(request, "Account successfully created " +uname+   " !")
+            messages.success(request, "Account successfully created for " +uname+   " !")
             return redirect('login_module:login')
     
 
@@ -60,21 +63,3 @@ def dashboard(request):
 def logoutUser(request):
     logout(request)
     return redirect('login_module:login')
-
-def forgotPassword(request):
-    if request.user.is_authenticated:
-        return redirect('login_module:dashboard')
-    else:
-        if request.method == "POST":
-            username = request.POST.get('username')
-            email = request.POST.get('email')
-            ##write code for sending an email
-            forgotten = User.objects.filter(username=username, email=email)
-            if forgotten is not None:
-                messages.info(request, "An email has been sent!")
-                return redirect('login_module:login')
-            else:
-                messages.info(request, "There is no such account :(")
-        form = ForgotForm()
-        context = {'form' : form}
-        return render(request, 'login_module/forgotPassword.html', context)
