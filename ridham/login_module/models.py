@@ -3,7 +3,10 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+User._meta.get_field('email')._unique = True
+
 class Profile(models.Model):
+    User._meta.get_field('email')._unique = True
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     isBlocked = models.BooleanField(default=False)
 
