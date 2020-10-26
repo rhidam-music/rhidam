@@ -2,11 +2,15 @@
 <html>
     <head>Signup for Ridham</head>
     <body>
+        {% for message in messages %}
+            {{message}}
+        {% endfor %}
         <form enctype="multipart/form-data" method="POST" autocomplete="on" action="">
             {% csrf_token %}
             {{form.as_p}}
             <input type="submit" name="Create User">
         </form>
+        
         <a href="{% url 'login_module:login' %}">Already have an account ?</a>
         <a href="{% url 'reset_password' %}">Forgot Password</a>
     </body>

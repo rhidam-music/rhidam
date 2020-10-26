@@ -3,7 +3,10 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+User._meta.get_field('email')._unique = True
+
 class Profile(models.Model):
+    User._meta.get_field('email')._unique = True
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     isBlocked = models.BooleanField(default=False)
 
@@ -29,13 +32,6 @@ class Song(models.Model):
 
     def __str__(self) -> str:
         return self.songName
-
-class LoginHistory(models.Model):
-    loginTime = models.DateTimeField()
-    userName = models.CharField(max_length=32)
-    loginIp = models.CharField(max_length=20)
-    def __str__(self) -> str:
-        return self.userName
 
 class Forgot(models.Model):
     username = models.CharField(max_length=150)
