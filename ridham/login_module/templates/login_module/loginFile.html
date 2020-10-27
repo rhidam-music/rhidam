@@ -1,48 +1,39 @@
 <!DOCTYPE html>
 <html>
-    <head>Ridham</head>
+    <head>
+        <title> Rhidam </title>
+        {% load static %}
+        <link rel='stylesheet' href='{% static "style.css" %}'>
+    </head>
     <body>
-        <div class="container h-100">
-            <div class="d-flex justify-content-center h-100">
-                <div class="user_card">
-                    <div class="d-flex justify-content-center">
-    
-    
-                        <h3 id="form-title">WELCOME TO RIDHAM</h3>
-                    </div>
-                    <div class="d-flex justify-content-center form_container">
+        <div id="body-data">
+                        <!-- <h3 id="form-title">Login to Rhidam</h3> --> 
+                    <div class='login-page-data'>
                         <form method="POST" action="">
                             {% csrf_token %}
-                            <div class="input-group mb-3">
-                                <div class="input-group-append">
-                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
-                                </div>
-                                <input type="text" name="username" placeholder="Username..." class="form-control">
+
+                            <div class='form-input'>
+                                <input type="text" name="username" placeholder="Username" class="form-control">
                             </div>
-                            <div class="input-group mb-2">
-                                <div class="input-group-append">
-                                    <span class="input-group-text"><i class="fas fa-key"></i></span>
-                                </div>
-                                    <input type="password" name="password" placeholder="Password..." class="form-control" >
+                            <div class='form-input'>
+                                <input type="password" name="password" placeholder="Password" class="form-control" >
                             </div>
-    
-                                <div class="d-flex justify-content-center mt-3 login_container">
-                                     <input class="btn login_btn" type="submit" value="Login">
-                                   </div>
+                            <div>
+                                <input class="btn btn-default" type="submit" value="Login" id="login_button">
+                            </div>
                         </form>
-    
                     </div>
                     {% for message in messages %}
                         <p id="messages"> {{message}} </p>
                     {% endfor %}
-                    <div class="mt-4">
-                        <div class="d-flex justify-content-center links">
-                            Don't have an account? <a href="{% url 'login_module:register' %}" class="ml-2">Sign Up</a>
-                        </div>
-                
+                    <div class='login-page-data'>
+                            Don't have an account? 
+                            <a href="{% url 'login_module:register' %}" class="ml-2">Sign Up</a>
                     </div>
-                </div>
-            </div>
+                    <div class='login-page-data'>
+                            Having trouble logging in?
+                            <a href="{% url 'reset_password' %}" class="ml-2">Forgot Password</a>
+                    </div>
         </div>
     </body>
 </html>
