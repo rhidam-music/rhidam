@@ -137,5 +137,6 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'rhidam.helpdesk@gmail.com'
 EMAIL_HOST_PASSWORD = 'gta5GTA5'
 
-MEDIA_URL = '/images/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
+MEDIA_URL = '/user_data/'
+DIRR = os.path.abspath(os.path.join(BASE_DIR, os.pardir))
+MEDIA_ROOT = os.path.join(DIRR + '/user_data')
