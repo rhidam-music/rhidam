@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>User Profile</title>
+    </head>
+    <body>
+        <a href="{% url 'login_module:logout' %}">LogOut {{ logged_in_user_username }}</a><br>
+        <a href="{% url 'core_app:dashboard' %}">Dashboard</a>
+    </body>
+</html>

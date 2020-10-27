@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
-    <head>Rhidam</head>
+    <head>
+        <title>Dashboard</title>
+    </head>
     <body>
-        Welcome to Rhidam - Core App
-
         <a href="{% url 'login_module:logout' %}">LogOut {{ logged_in_user_username }}</a><br>
+        <a href="{% url 'core_app:user_profile' %}">Profile</a>
         {% for message in messages %}
         <p id="messages"> {{message}} </p>
         {% endfor %}
-
         {% if songs_list %}
             <ul>
                 {% for song in songs_list %}

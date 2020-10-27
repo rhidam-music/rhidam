@@ -7,6 +7,16 @@ from login_module.models import Profile
 from .forms import SongUploadForm
 from .models import Song
 
+@login_required
+def user_profile(request):
+    context = {
+        'logged_in_user_username' : request.user
+    }
+    return render(request, 'core_app/user_profile.html', context=context)
+
+def HomepageView(request):
+    return render(request, 'core_app/Homepage.html')
+    pass
 
 @login_required
 def dashboard(request):

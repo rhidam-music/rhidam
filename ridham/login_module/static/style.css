@@ -1,0 +1,61 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+#test {
+    color: #0099ff;
+}
+
+.form-input {
+    position: relative;
+    border: 5px;
+    border-radius: 5px;
+}
+
+#form-title {
+    text-align: center;
+}
+#body-data {
+    margin-top: auto;
+    position: relative;
+    width: 50%;
+    background-color: black;
+    left: 50%;
+    border-radius: 5px;
+    transform: translate(-50%, 100%);
+}
+form {
+    align-content: center;
+}
+body {
+    background-color: #a0d2f3;
+    color: white;
+    /* font-family: 'Roboto Mono', monospace; */
+    font-family: 'Poppins', sans-serif;
+    font-size: large;
+}
+
+#login_button {
+    background-color: #0099ff;
+    border: none;
+    color:white;
+}
+.login-page-data {
+    margin: auto;
+    width: 50%;
+
+}
+a {
+    text-decoration: none;
+}
+input{
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 2px solid rgb(71, 71, 182);
+    border-radius: 4px;
+    background-color: #a0d2f3;
+    color: white;
+}
+
+input:focus {
+    border: 2px solid red;
+  }
