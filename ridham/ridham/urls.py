@@ -18,6 +18,10 @@ from django.urls import path, include
 from django.contrib.auth import views as auth_views
 from core_app.views import HomepageView
 
+from django.conf.urls.static import static
+from django.conf import settings
+
+
 urlpatterns = [
     path('', HomepageView),
     path('admin/', admin.site.urls),
@@ -31,11 +35,22 @@ urlpatterns = [
     # 4. password successfully changed --> PasswordResetCompleteView.as_view()
 
     path('reset_password/', 
-    auth_views.PasswordResetView.as_view(template_name = "login_module/resetPassword.html"), 
-    name='reset_password'),
+     auth_views.PasswordResetView.as_view(template_name = "login_module/resetPassword.html"), 
+     name='reset_password'),
 
     path('reset_password_sent/',
-     auth_views.PasswordResetDoneView.as_view(), name='password_reset_done'),
-    path('reset/<slug:uidb64>/<slug:token>/', auth_views.PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
-    path('reset_password_complete/', auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
+     auth_views.PasswordResetDoneView.as_view(template_name = "login_module/resetDone.html"),
+     name='password_reset_done'),
+
+    path('reset/<slug:uidb64>/<slug:token>/',
+     auth_views.PasswordResetConfirmView.as_view(template_name = "login_module/resetConfirm.html"), 
+     name='password_reset_confirm'),
+    
+    path('reset_password_complete/',
+     auth_views.PasswordResetCompleteView.as_view(template_name = "login_module/resetComplete.html"),
+     name='password_reset_complete'),
+
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
+

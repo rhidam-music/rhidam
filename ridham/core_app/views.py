@@ -4,14 +4,31 @@ from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
 from login_module.models import Profile
 
-from .forms import SongUploadForm
+from .forms import SongUploadForm, ProfileChangeForm, UserChangeForm
 from .models import Song
 
 @login_required
 def user_profile(request):
+    user = request.user
+    profile = request.user.profile
+    form1 = ProfileChangeForm(instance=profile)
+    form2 = UserChangeForm(instance=user)
     context = {
-        'logged_in_user_username' : request.user
+        'form1' : form1,
+        'form2' : form2,
+        'logged_in_user_username' : request.user,
     }
+    
+    if request.method == 'POST':
+        form1 = ProfileChangeForm(request.POST, request.FILES, instance=profile)
+        form2 = UserChangeForm(request.POST, request.FILES, instance=user)
+        if( form1.is_valid() and form2.is_valid() ):
+            profile = form1.save()
+            user = form2.save()
+            if(profile.profile_pic == ''):
+                profile.profile_pic = 'noimage.jpg'
+
+
     return render(request, 'core_app/user_profile.html', context=context)
 
 def HomepageView(request):
@@ -24,6 +41,7 @@ def dashboard(request):
     a = User.objects.filter(username=request.user)[0]
     user = Profile.objects.filter(user=a)[0]
     songs_list = Song.objects.filter(owner=user)
+    print(request.user.profile.profile_pic)
     
     context = {
         'form' : form,

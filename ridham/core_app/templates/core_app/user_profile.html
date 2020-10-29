@@ -1,10 +1,41 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>User Profile</title>
-    </head>
-    <body>
-        <a href="{% url 'login_module:logout' %}">LogOut {{ logged_in_user_username }}</a><br>
-        <a href="{% url 'core_app:dashboard' %}">Dashboard</a>
-    </body>
-</html>
+
+{% load static %}
+
+<style>
+	.profile-pic{
+		max-width: 200px;
+		max-height:200px;
+		margin: 0 auto;
+	}
+</style>
+
+<br>
+<div class="row">
+	<div class="col-md-3">
+		<div class="card card-body">
+            <a href="{% url 'login_module:logout' %}">LogOut {{ logged_in_user_username }}</a><br>
+            <a href="{% url 'core_app:dashboard' %}">Dashboard</a>
+			<hr>
+			<h3 style="text-align: center">Account Settings</h3>
+            <hr>
+            {% if request.user.profile.profile_pic is not None %}
+                <img class="profile-pic" src="{{request.user.profile.profile_pic.url}}" alt="no image has been uploaded :(">
+            {% endif %}
+		
+		</div>
+	</div>
+	<div class="col-md-9">
+		<div class="card card-body">
+			
+			<form method="POST" action="" enctype="multipart/form-data">
+				{% csrf_token %}
+                {{form1.as_p}}	
+                {{form2.as_p}}	
+			<input class="btn btn-primary" type="submit" name="Update Information">
+            </form>
+            
+		</div>
+	</div>
+</div>
+

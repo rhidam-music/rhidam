@@ -9,7 +9,7 @@ class Profile(models.Model):
     User._meta.get_field('email')._unique = True
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     isBlocked = models.BooleanField(default=False)
-    profile_pic = models.ImageField(null=True, blank=True)
+    profile_pic = models.ImageField(default = 'noimage.jpg')
 
     def __str__(self) -> str:
         return self.user.username
