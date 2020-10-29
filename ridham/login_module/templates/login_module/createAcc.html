@@ -1,17 +1,46 @@
 <!DOCTYPE html>
 <html>
-    <head>Signup for Ridham</head>
-    <body>
-        {% for message in messages %}
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        {% load static %}
+        <link rel='stylesheet' href='{% static "style1.css" %}'>
+        <title>Signup for Rhidam</title>
+    </head>
+    <body style="background-color:#021b2c ">
+        <div style="background-color: rgb(2, 27, 44) !important" class="jumbotron text-center" id="createAccountHeader">
+            <h1>Signup for Rhidam</h1>
+            <!-- <p>subhead</p> --> 
+        </div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6" >
+                </div>
+                <div class="col-md-6">
+                    {% for message in messages %}
             {{message}}
         {% endfor %}
-        <form enctype="multipart/form-data" method="POST" autocomplete="on" action="">
-            {% csrf_token %}
-            {{form.as_p}}
-            <input type="submit" name="Create User">
-        </form>
-        
-        <a href="{% url 'login_module:login' %}">Already have an account ?</a>
-        <a href="{% url 'reset_password' %}">Forgot Password</a>
+        <!--<div class="form-input">-->
+            <form enctype="multipart/form-data" method="POST" autocomplete="on" action="">
+                {% csrf_token %}
+
+                <p> {{form.as_p}} </p>
+                <!-- {{form.sername}} -->
+                <!-- https://jsfiddle.net/ivanov11/hzf0jxLg/ -->
+                <!-- https://jsfiddle.net/ivanov11/dghm5cu7/ -->
+                <!-- https://www.youtube.com/watch?v=tUqUdu0Sjyc&ab_channel=DennisIvy -->
+                <input type="submit" name="Create User">
+            </form>
+        <!--</div>-->
+            </div>
+            </div>
+        </div>
+        <br>
+        <div class="col-md-6"></div>
+        <div class="col-md-6"><p><a style="color: blue"href="{% url 'login_module:login' %}">Already have an account ?</a><p>
+        <a style="color: blue"href="{% url 'reset_password' %}">Forgot Password</a></div>
     </body>
 </html>

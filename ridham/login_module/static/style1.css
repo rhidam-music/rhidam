@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+#test {
+    color: #0099ff;
+}
+
+.form-input {
+    color :rgb(16, 54, 85);
+    position: relative;
+    border: 5px;
+    border-radius: 5px;
+}
+
+#form-title {
+    text-align: center;
+}
+#body-data {
+    margin-top: auto;
+    position: relative;
+    width: 50%;
+    background-color: black;
+    left: 50%;
+    border-radius: 5px;
+    transform: translate(-50%, 100%);
+}
+#createAccountHeader{
+    border-bottom-style: solid;
+    border-bottom-color: white;
+}
+form {
+    align-content: center;
+}
+body {
+    color: rgb(240,240,240);
+    /* font-family: 'Roboto Mono', monospace; */
+    font-family: 'Poppins', sans-serif;
+    font-size: medium;
+}
+
+a {
+    text-decoration: none;
+}
+input{
+    width: 95%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 2px solid rgb(71, 71, 182);
+    border-radius: 4px;
+    background-color: rgb(140,190,223);
+    color: black;
+}

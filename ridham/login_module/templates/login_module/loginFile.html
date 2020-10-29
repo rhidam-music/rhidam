@@ -7,7 +7,6 @@
     </head>
     <body>
         <div id="body-data">
-                        <!-- <h3 id="form-title">Login to Rhidam</h3> --> 
                     <div class='login-page-data'>
                         <form method="POST" action="">
                             {% csrf_token %}
@@ -37,3 +36,43 @@
         </div>
     </body>
 </html>
+
+<!-- 
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        {% load static %}
+        <link rel='stylesheet' href='{% static "style1.css" %}'>
+        <title>Rhidam</title>
+    </head>
+    <body style="background-color:rgb(2, 27, 44) ">
+        <div style="background-color: rgb(2, 27, 44) !important" class="jumbotron text-center" id="createAccountHeader">
+            <h1>Login to Rhidam</h1>
+        </div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6" >
+                </div>
+                <div class="col-md-6">
+                    {% for message in messages %}
+            {{message}}
+        {% endfor %}
+            <form enctype="multipart/form-data" method="POST" autocomplete="on" action="">
+                {% csrf_token %}
+                <p> {{form.as_p}} </p>
+                <input type="submit" name="Create User">
+            </form>
+            </div>
+            </div>
+        </div>
+        <br>
+        <div class="col-md-6"></div>
+        <div class="col-md-6"><p><a style="color: blue"href="{% url 'login_module:register' %}">Create a New Account</a><p>
+        <a style="color: blue"href="{% url 'reset_password' %}">Forgot Password</a></div>
+    </body>
+</html> -->

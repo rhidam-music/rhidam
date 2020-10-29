@@ -21,8 +21,8 @@ def register(request):
         if form.is_valid():
             try:
                 user = form.save()
-                gp = Group.objects.get(name='customer')
-                user.groups.add(gp)
+                # gp = Group.objects.get(name='customer')
+                # user.groups.add(gp)
                 uname = user.username
                 messages.success(request, "Account successfully created for " +uname+   " !")
                 return redirect('login_module:login')
