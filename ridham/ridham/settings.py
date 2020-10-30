@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_email_verification',
 ]
 
 MIDDLEWARE = [
@@ -130,12 +131,23 @@ STATIC_URL = '/static/'
 
 #SMTP Configuration
 
+EMAIL_ACTIVE_FIELD = 'is_active'
+EMAIL_SERVER = 'smtp.gmail.com'
+EMAIL_ADDRESS = 'rhidam.helpdesk@gmail.com'
+EMAIL_FROM_ADDRESS = 'rhidam.helpdesk@gmail.com'
+EMAIL_PASSWORD = 'gta5GTA5'
+EMAIL_MAIL_SUBJECT = 'Confirm your email'
+EMAIL_MAIL_HTML = 'login_module/mail_body.html'
+EMAIL_PAGE_TEMPLATE = 'login_module/confirm_template.html'
+EMAIL_PAGE_DOMAIN = 'http://127.0.0.1:8000/'
+
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'rhidam.helpdesk@gmail.com'
 EMAIL_HOST_PASSWORD = 'gta5GTA5'
+
 
 MEDIA_URL = '/user_data/'
 DIRR = os.path.abspath(os.path.join(BASE_DIR, os.pardir))

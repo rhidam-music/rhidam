@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.contrib.auth import views as auth_views
 from core_app.views import HomepageView
+from django_email_verification import urls as mail_urls
 
 from django.conf.urls.static import static
 from django.conf import settings
@@ -27,6 +28,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('dashboard/', include('core_app.urls')),
     path('accounts/', include('login_module.urls')),
+    path('mails/', include(mail_urls)),
 
     ##forgot password build 
     # 1. submit email form --> PasswordResetView.as_view()
