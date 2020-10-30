@@ -1,12 +1,65 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
         <title>Dashboard</title>
     </head>
-    <body>
-        <a href="{% url 'login_module:logout' %}">LogOut {{ logged_in_user_username }}</a><br>
-        <a href="{% url 'core_app:user_profile' %}">Profile</a>
-        {% for message in messages %}
+    <body style="padding:10px; background-color:#0099ff;">
+        <div class="container">
+            <a href="#link" class="btn btn-info" role="button">Link Button</a>
+            <!--<a href="{% url 'login_module:logout' %}"><button type="button" class="btn"><span style="padding-right:5px; margin:10px;" class="glyphicon glyphicon-off"></span>Log Out</button></a>-->
+        <div class="dropdown pull-right">
+            <button class="btn dropdown-toggle pull-right" type="button" data-toggle="dropdown"><span style="padding-right:5px" class="glyphicon glyphicon-cog"></span>Settings
+            <span class="caret"></span></button>
+            <ul class="dropdown-menu">
+              <li><a href="{% url 'core_app:user_profile' %}"><span class="glyphicon glyphicon-user"></span>    Profile</a></li>
+              <li><a>feature1</a></li>
+              <li><a>feature2</a></li>
+              <li class="divider"></li>
+              <li><a href="{% url 'login_module:logout' %}"><span class="glyphicon glyphicon-off"></span>    Log Out </a></li>
+            </ul>
+        </div>
+        <p></p>
+        <div class="row">
+            <div class="col-md-4">
+                <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo">Add Songs</button>
+                <div id="demo" class="collapse">
+                  <form enctype="multipart/form-data" method="POST">
+                      {% csrf_token %}
+                      {{form.as_p}}
+                      <input type="hidden" value="1" name="songup">
+                      <input type="submit" value="Upload Song">
+                  </form>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo1">View Songs/Playlists</button>
+                <div id="demo1" class="collapse">
+                    <!--{% for message in messages %}
+        <p id="messages"> {{message}} </p>
+        {% endfor %}-->
+        {% if songs_list %}
+            <ul>
+                {% for song in songs_list %}
+                    <li><a href="{{ song.songLink }}">{{ song.songName }}</a></li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No songs uploaded</p>
+        {% endif %}
+        </div>
+                </div>
+          </div>
+        
+  </div>
+        <!--<a href="{% url 'login_module:logout' %}">LogOut {{ logged_in_user_username }}</a><br>
+        <a href="{% url 'core_app:user_profile' %}">Profile</a>-->
+
+        <!--{% for message in messages %}
         <p id="messages"> {{message}} </p>
         {% endfor %}
         {% if songs_list %}
@@ -23,6 +76,7 @@
             {{form.as_p}}
             <input type="hidden" value="1" name="songup">
             <input type="submit" value="Upload Song">
-        </form>
+        </form>-->
+    </div>
     </body>
 </html>

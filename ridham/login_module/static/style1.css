@@ -3,6 +3,12 @@
     color: #0099ff;
 }
 
+.redirect-text{
+    color : white;
+    text-align: center;
+    font-size: 35;
+}
+
 .form-input {
     color :rgb(16, 54, 85);
     position: relative;

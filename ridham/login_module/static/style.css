@@ -4,25 +4,34 @@
     color: #021b2c;
 }
 
+.show-password{
+    text-align : left;
+    font-size: 15px;
+}
+
+.error-messages{
+    text-align: center;
+    color: red;
+}
+
 .form-input {
     position: relative;
     border: 5px;
     border-radius: 5px;
 }
-
 #form-title {
     text-align: center;
 }
 #body-data {
-    margin-top: auto;
-    position: relative;
-    width: 50%;
-    padding-top:7px;
-    padding-bottom:7px;
-    background-color: #13384e;
-    left: 50%;
-    border-radius: 5px;
-    transform: translate(-50%, 100%);
+    max-width: 600px;
+    margin: 0px auto;
+    padding: 2rem 3rem;
+    background-color: rgb(48, 81, 100);
+    border-radius: 7px;
+}
+#createAccountHeader{
+    border-bottom-style: solid;
+    border-bottom-color: white;
 }
 form {
     align-content: center;
@@ -42,16 +51,17 @@ body {
 }
 .login-page-data {
     margin: auto;
-    width: 50%;
-
 }
 a {
     text-decoration: none;
+    color:rgb(0,0,200);
+}
+a:hover{
+    color:rgb(0,0,230);
 }
 input{
     width: 100%;
     padding: 12px 20px;
-    margin: 8px 0;
     box-sizing: border-box;
     border: 2px solid rgb(71, 71, 182);
     border-radius: 4px;
@@ -61,4 +71,8 @@ input{
 
 input:focus {
     border: 2px solid red;
+  }
+
+  .cursor-pointer {
+      cursor: pointer;
   }

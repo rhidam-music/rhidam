@@ -1,6 +1,28 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <style>
+            img{
+                opacity: 0.2;
+            }
+        </style>
+        <script> 
+            function show_hide_password() {
+                var x = document.getElementById('id_password1');
+                if (x.type === "password") {
+                    x.type = "text";
+                } else {
+                    x.type = "password";
+                }
+                var y = document.getElementById('id_password2');
+                if (y.type === "password") {
+                    y.type = "text";
+                } else {
+                    y.type = "password";
+                }
+            }
+        </script>
+
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -18,21 +40,52 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-6" >
+                    <img src="../../user_data/ridham-logo2.png" width=100% class="center">
                 </div>
                 <div class="col-md-6">
                     {% for message in messages %}
-            {{message}}
-        {% endfor %}
+                        {{message}}
+                    {% endfor %}
         <!--<div class="form-input">-->
             <form enctype="multipart/form-data" method="POST" autocomplete="on" action="">
                 {% csrf_token %}
-
-                <p> {{form.as_p}} </p>
-                <!-- {{form.sername}} -->
-                <!-- https://jsfiddle.net/ivanov11/hzf0jxLg/ -->
-                <!-- https://jsfiddle.net/ivanov11/dghm5cu7/ -->
-                <!-- https://www.youtube.com/watch?v=tUqUdu0Sjyc&ab_channel=DennisIvy -->
-                <input type="submit" name="Create User">
+                <p>
+                    <label for="id_username">Username:</label> 
+                    <input type="text" name="username" maxlength="150" autofocus required id="id_username"> 
+                    <span class="helptext">Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.</span>
+                </p>
+                <p>
+                    <label for="id_first_name">First name:</label> 
+                    <input type="text" name="first_name" maxlength="150" id="id_first_name">
+                </p>
+                <p>
+                    <label for="id_last_name">Last name:</label> 
+                    <input type="text" name="last_name" maxlength="150" id="id_last_name">
+                </p>
+                <p>
+                    <label for="id_email">Email address:</label> 
+                    <input type="email" name="email" maxlength="254" id="id_email">
+                </p>
+                <p>
+                    <label for="id_password1">Password:</label> 
+                    <input type="password" name="password1" autocomplete="new-password" required id="id_password1"> 
+                    <!-- <label><input type="checkbox" onclick="show_hide_password('id_password1')">Show Password</label> -->
+                    <span class="helptext">
+                        <ul>
+                            <li>Your password can’t be too similar to your other personal information.</li>
+                            <li>Your password must contain at least 8 characters.</li>
+                            <li>Your password can’t be a commonly used password.</li>
+                            <li>Your password can’t be entirely numeric.</li>
+                        </ul>
+                    </span>
+                </p>
+                <p>
+                    <label for="id_password2">Password confirmation:</label> 
+                    <input type="password" name="password2" autocomplete="new-password" required id="id_password2">
+                    <label><input type="checkbox" onclick="show_hide_password()">Show Password</label>
+                    <span class="helptext">Enter the same password as before, for verification.</span>
+                </p>
+                <input style="width: 12%;"class ="btn btn-success" type="submit" name="Create User">
             </form>
         <!--</div>-->
             </div>
