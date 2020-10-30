@@ -8,6 +8,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group
 from .decorators import unauthenticated_user, allowed_users, admins_only
+from django_email_verification import sendConfirm
 
 '''
 my 3 wrappers -> @unauthenticated_user, @allowed_users, @admins_only
@@ -21,10 +22,11 @@ def register(request):
         if form.is_valid():
             try:
                 user = form.save()
+                sendConfirm(user)
                 # gp = Group.objects.get(name='customer')
                 # user.groups.add(gp)
                 uname = user.username
-                messages.success(request, "Account successfully created for " +uname+   " !")
+                messages.success(request, "Please check you mail for account verification, " + uname +   " ! After that, you can successfully log-in !")
                 return redirect('login_module:login')
             except:
                 messages.info("There is already an account with this email id! ")
