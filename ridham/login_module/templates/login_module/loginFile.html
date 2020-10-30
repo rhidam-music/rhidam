@@ -1,30 +1,63 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <script> 
+            function show_hide_password() {
+                var x = document.getElementById("password");
+                if (x.type === "password") {
+                    x.type = "text";
+                } else {
+                    x.type = "password";
+                }
+            }
+        </script>
+        
         <title> Rhidam </title>
         {% load static %}
         <link rel='stylesheet' href='{% static "style.css" %}'>
     </head>
     <body>
+        <div style="background-color: rgb(2,27,44) !important" class="jumbotron text-center" id="createAccountHeader">
+            <h1> Login</h1>
+        </div>
         <div id="body-data">
+            <p></p>
                     <div class='login-page-data'>
                         <form method="POST" action="">
                             {% csrf_token %}
-
-                            <div class='form-input'>
-                                <input type="text" name="username" placeholder="Username" class="form-control">
-                            </div>
-                            <div class='form-input'>
-                                <input type="password" name="password" placeholder="Password" class="form-control" >
-                            </div>
-                            <div>
+                              <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                  <span class="input-group-text"><i class="glyphicon glyphicon-lock"></i></span>
+                                </div>
+                                <input type="text" class="form-control" aria-label="Username" name="username" placeholder="Username">
+                              </div>
+                              
+                              <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                  <span class="input-group-text"><i class="glyphicon glyphicon-lock"></i></span>
+                                </div>
+                                <input type="text" class="form-control" aria-label="Password" id="password" name="password" placeholder="Password">
+                                <div class="input-group-append">
+                                  <span class="input-group-text cursor-pointer" type="button" onclick="show_hide_password()">Show Password</span>
+                                </div>
+                              </div>
+                            <div class="input-group">
+                                <br>
+                                {% for message in messages %}
+                                    <p id="messages" class="error-messages"> {{message}} </p>
+                                {% endfor %}
                                 <input class="btn btn-default" type="submit" value="Login" id="login_button">
                             </div>
                         </form>
                     </div>
-                    {% for message in messages %}
-                        <p id="messages"> {{message}} </p>
-                    {% endfor %}
+                    <br>
+                    
                     <div class='login-page-data'>
                             Don't have an account? 
                             <a href="{% url 'login_module:register' %}" class="ml-2">Sign Up</a>
@@ -36,43 +69,3 @@
         </div>
     </body>
 </html>
-
-<!-- 
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-        {% load static %}
-        <link rel='stylesheet' href='{% static "style1.css" %}'>
-        <title>Rhidam</title>
-    </head>
-    <body style="background-color:rgb(2, 27, 44) ">
-        <div style="background-color: rgb(2, 27, 44) !important" class="jumbotron text-center" id="createAccountHeader">
-            <h1>Login to Rhidam</h1>
-        </div>
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-6" >
-                </div>
-                <div class="col-md-6">
-                    {% for message in messages %}
-            {{message}}
-        {% endfor %}
-            <form enctype="multipart/form-data" method="POST" autocomplete="on" action="">
-                {% csrf_token %}
-                <p> {{form.as_p}} </p>
-                <input type="submit" name="Create User">
-            </form>
-            </div>
-            </div>
-        </div>
-        <br>
-        <div class="col-md-6"></div>
-        <div class="col-md-6"><p><a style="color: blue"href="{% url 'login_module:register' %}">Create a New Account</a><p>
-        <a style="color: blue"href="{% url 'reset_password' %}">Forgot Password</a></div>
-    </body>
-</html> -->

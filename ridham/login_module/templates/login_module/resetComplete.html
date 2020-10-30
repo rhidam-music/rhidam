@@ -1,8 +1,27 @@
 <html>
     <head> 
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        {% load static %}
+        <link rel='stylesheet' href='{% static "style1.css" %}'>
     </head>
-    <body>
-        <p>reset complete!</p>
-        <a href="{% url 'login_module:login' %}">login</a>
+
+    <body style="background-color:#021b2c ">
+        <div style="background-color: rgb(2, 27, 44) !important" class="jumbotron text-center" id="createAccountHeader">
+            <h2>Password has been reset!</h2>
+        </div >
+        <div class="container">
+            <div class="col-md-6"><p class="redirect-text">Redirecting you to Login Page in just a sec...<p></p>
+        </div>
+        <script>
+            function redirect(){
+               window.location.href = "{% url 'login_module:login' %}";
+            }
+        
+            setTimeout(redirect, 2000); //2000 is equivalent to 2 seconds
+        </script>
     </body>
 </html>
