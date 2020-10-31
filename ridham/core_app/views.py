@@ -41,12 +41,11 @@ def dashboard(request):
     a = User.objects.filter(username=request.user)[0]
     user = Profile.objects.filter(user=a)[0]
     songs_list = Song.objects.filter(owner=user)
-    # print(request.user.profile.profile_pic)
     
     context = {
         'form' : form,
         'songs_list' : songs_list,
-        'logged_in_user_username' : request.user
+        'my_user' : user.user,
     }
 
     if request.method == 'POST':
