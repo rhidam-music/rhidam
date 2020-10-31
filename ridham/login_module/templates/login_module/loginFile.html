@@ -11,10 +11,13 @@
         <script> 
             function show_hide_password() {
                 var x = document.getElementById("password");
+                var y = document.getElementById("show-pass");
                 if (x.type === "password") {
                     x.type = "text";
+                    y.innerHTML = "Hide";
                 } else {
                     x.type = "password";
+                    y.innerHTML = "Show";
                 }
             }
         </script>
@@ -45,7 +48,7 @@
                                 </div>
                                 <input type="text" class="form-control" aria-label="Password" id="password" name="password" placeholder="Password">
                                 <div class="input-group-append">
-                                  <span class="input-group-text cursor-pointer" type="button" onclick="show_hide_password()">Show Password</span>
+                                  <span class="input-group-text cursor-pointer" type="button" onclick="show_hide_password()" id='show-pass'>Show</span>
                                 </div>
                               </div>
                             <div class="input-group">
