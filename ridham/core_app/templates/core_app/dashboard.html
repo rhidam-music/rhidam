@@ -8,11 +8,11 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
         <title>Dashboard</title>
     </head>
-    <body style="padding:10px; background-color:white; padding:10px 15px 10px 15px">
+    <body style="background-color:white; padding:10px 15px 10px 15px">
         <div class="container-fluid">
             <hr>
 			<div class="dropdown pull-right" style="transform: translate(0%,-20%);">
-				<button class="btn dropdown-toggle pull-right" type="button" data-toggle="dropdown"><span style="padding-right:5px" class="glyphicon glyphicon-cog"></span>Settings
+				<button class="btn dropdown-toggle pull-right" type="button" data-toggle="dropdown"><span style="padding-right:5px" class="glyphicon glyphicon-cog"></span>Options
 				<span class="caret"></span></button>
 				<ul class="dropdown-menu">
 				  <li><a href="{% url 'core_app:user_profile' %}"><span class="glyphicon glyphicon-user"></span>     Profile</a></li>
@@ -22,7 +22,7 @@
 				  <li><a href="{% url 'login_module:logout' %}"><span class="glyphicon glyphicon-off"></span>    Log Out </a></li>
 				</ul>
 			</div>
-			<h4>Welcome, {{user}}</h4>
+			<h4>Welcome, {{my_user.first_name}}</h4>
             <hr>
         <p></p>
             <div class="col-md-4">
@@ -38,22 +38,13 @@
                 <br><br><br>
                 <div class="row">
                     <h4 style="margin-bottom:30px">Add Playlist</h4>
-                <!--<div id="" class="collapse">
-                  <form enctype="multipart/form-data" method="POST">
-                      {% csrf_token %}
-                      {{form.as_p}}
-                      <input type="hidden" value="1" name="songup">         Form for adding playlist to be added
-                      <input type="submit" value="Upload Song">
-                  </form>
-                </div>-->
+
                 </div>
             </div>
             <div class="col-md-4">
                 <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo1">View Songs</button>
                 <div id="demo1" class="collapse">
-                    <!--{% for message in messages %}
-        <p id="messages"> {{message}} </p>
-        {% endfor %}-->
+
         {% if songs_list %}
             <ul>
                 {% for song in songs_list %}
@@ -64,29 +55,8 @@
             <p>No songs uploaded</p>
         {% endif %}
         </div>
-                </div>
-          </div>
-        
-        <!--<a href="{% url 'login_module:logout' %}">LogOut {{ logged_in_user_username }}</a><br>
-        <a href="{% url 'core_app:user_profile' %}">Profile</a>-->
+            </div>
+        </div>
 
-        <!--{% for message in messages %}
-        <p id="messages"> {{message}} </p>
-        {% endfor %}
-        {% if songs_list %}
-            <ul>
-                {% for song in songs_list %}
-                    <li><a href="{{ song.songLink }}">{{ song.songName }}</a></li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <p>No songs uploaded</p>
-        {% endif %}
-        <form enctype="multipart/form-data" method="POST">
-            {% csrf_token %}
-            {{form.as_p}}
-            <input type="hidden" value="1" name="songup">
-            <input type="submit" value="Upload Song">
-        </form>-->
     </body>
 </html>
