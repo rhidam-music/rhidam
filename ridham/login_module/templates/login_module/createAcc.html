@@ -44,7 +44,7 @@
                 </div>
                 <div class="col-md-6">
                     {% for message in messages %}
-                        {{message}}
+                        <p class="warning-message">{{message}}</p>
                     {% endfor %}
         <!--<div class="form-input">-->
             <form enctype="multipart/form-data" method="POST" autocomplete="on" action="">
@@ -82,7 +82,8 @@
                 <p>
                     <label for="id_password2">Password confirmation:</label> 
                     <input type="password" name="password2" autocomplete="new-password" required id="id_password2">
-                    <label><input type="checkbox" onclick="show_hide_password()">Show Password</label>
+                    <label style="float:right;"><input type="checkbox" onclick="show_hide_password()">Show Password</label>
+                    <br>
                     <span class="helptext">Enter the same password as before, for verification.</span>
                 </p>
                 <input style="width: 12%;"class ="btn btn-success" type="submit" name="Create User">

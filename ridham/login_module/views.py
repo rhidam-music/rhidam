@@ -31,6 +31,9 @@ def register(request):
             except:
                 messages.info("There is already an account with this email id! ")
                 return redirect('login_module:register')
+        else:
+            messages.info(request, "Please follow the guidelines for registering properly. ")
+            form = CreateUserForm()
     
 
     context = {'form' : form}

@@ -4,12 +4,22 @@
     <meta charset="UTF-8">
     <title>Confirmation</title>
     <style>
-        body{ color: blue; }
+        body{ color: blue; float: center;}
     </style>
 </head>
 <body>
     {% if success %}
-        You have confirmed your account!
+    <div class="container">    
+    You have confirmed your account!
+            <div class="col-md-6"><p class="redirect-text">Redirecting you to Login Page in just a sec...<p></p>
+        </div>
+        <script>
+            function redirect(){
+               window.location.href = "{% url 'login_module:login' %}";
+            }
+        
+            setTimeout(redirect, 3000); //2000 is equivalent to 2 seconds
+        </script>
     {% else %}
         Error, invalid token!
     {% endif %}
