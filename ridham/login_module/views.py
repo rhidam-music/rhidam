@@ -29,7 +29,7 @@ def register(request):
                 messages.success(request, "Please check you mail for account verification, " + uname +   " ! After that, you can successfully log-in !")
                 return redirect('login_module:login')
             except:
-                messages.info("There is already an account with this email id! ")
+                messages.info(request, "There is already an account with this email id! ")
                 return redirect('login_module:register')
         else:
             messages.info(request, "Please follow the guidelines for registering properly. ")

@@ -1,7 +1,12 @@
 <!DOCTYPE html>
-
+<html>
+<head>
+		<meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 {% load static %}
-
 <style>
 	.profile-pic{
 		max-width: 200px;
@@ -9,15 +14,25 @@
 		margin: 0 auto;
 	}
 </style>
-
-<br>
-<div class="row">
-	<div class="col-md-3">
+</head>
+<body style="padding:10px 20px 10px 20px;">
+<div class="container-fluid">
+	<div class="row">
 		<div class="card card-body">
-            <a href="{% url 'login_module:logout' %}">LogOut {{ logged_in_user_username }}</a><br>
-            <a href="{% url 'core_app:dashboard' %}">Dashboard</a>
+			<h2 style="text-align: center">Account Settings</h2>
 			<hr>
-			<h3 style="text-align: center">Account Settings</h3>
+			<div class="dropdown pull-right" style="transform: translate(0%,-20%);">
+				<button class="btn dropdown-toggle pull-right" type="button" data-toggle="dropdown"><span style="padding-right:5px" class="glyphicon glyphicon-cog"></span>Settings
+				<span class="caret"></span></button>
+				<ul class="dropdown-menu">
+				  <li><a href="{% url 'core_app:dashboard' %}"><span class="glyphicon glyphicon-list"></span>      Dashboard</a></li>
+				  <li><a>feature1</a></li>
+				  <li><a>feature2</a></li>
+				  <li class="divider"></li>
+				  <li><a href="{% url 'login_module:logout' %}"><span class="glyphicon glyphicon-off"></span>    Log Out </a></li>
+				</ul>
+			</div>
+			<h4>Welcome, {{user}}</h4>
             <hr>
             {% if request.user.profile.profile_pic is not None %}
                 <img class="profile-pic" src="{{request.user.profile.profile_pic.url}}" alt="no image has been uploaded :(">
@@ -25,7 +40,7 @@
 		
 		</div>
 	</div>
-	<div class="col-md-9">
+	<div class="row">
 		<div class="card card-body">
 			
 			<form method="POST" action="" enctype="multipart/form-data">
@@ -38,4 +53,5 @@
 		</div>
 	</div>
 </div>
-
+</body>
+</html>
