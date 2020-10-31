@@ -57,8 +57,7 @@ a {
     color:rgb(0,0,200);
 }
 a:hover{
-    color: blue;
-    text-decoration: none;
+    color:rgb(0,0,230);
 }
 input{
     width: 100%;
