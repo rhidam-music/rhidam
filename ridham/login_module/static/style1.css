@@ -15,7 +15,9 @@
     border: 5px;
     border-radius: 5px;
 }
-
+.warning-message{
+    color:red;
+}
 #form-title {
     text-align: center;
 }
