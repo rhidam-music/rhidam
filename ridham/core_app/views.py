@@ -11,7 +11,6 @@ from .models import Song
 import random
 import string
 import os
-from mutagen.mp3 import MP3
 
 @login_required
 def user_profile(request):
