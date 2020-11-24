@@ -1,11 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@600&display=swap');
-
-
+@import url('https://fonts.googleapis.com/css2?family=Faster+One&display=swap');
 
 a:visited{
     text-decoration: none;
 }
-
 
 
 a{
@@ -24,6 +22,10 @@ a:hover{
     color:#0099ff;
 }
 
+#banner{
+    font-family: 'Faster One', cursive;
+    color:white;
+}
 
 #con2{
     text-align: center;
