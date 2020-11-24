@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
     <head>
@@ -6,65 +7,223 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <link rel='stylesheet' href="https://cdn.plyr.io/3.6.2/plyr.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html5media/1.1.8/html5media.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/plyr/3.6.2/plyr.min.js"></script>
+        <link rel="stylesheet" href="{% static 'player.css' %}">
+
         <title>Dashboard</title>
+        <script>
+            // Mythium Archive: https://archive.org/details/mythium/
+
+jQuery(function ($) {
+    'use strict'
+    var supportsAudio = !!document.createElement('audio').canPlayType;
+    if (supportsAudio) {
+        // initialize plyr
+        var player = new Plyr('#audio1', {
+            controls: [
+                'restart',
+                'play',
+                'progress',
+                'current-time',
+                'duration',
+                'mute',
+                'volume',
+                'download'
+            ]
+        });
+        // initialize playlist and controls
+        var trackJugaad = 1;
+        var index = 0,
+            playing = false,
+            mediaPath = '{{request.scheme}}://{{request.get_host}}/user_data/',
+            extension = '',
+            tracks = [
+
+            {% for song in songs_list %}
+                {
+                    "track": trackJugaad++,
+                    "name": "{{song.songName}}",
+                    "duration": "2:46",
+                    "file": "{{song.songSlug}}"
+                },
+            {% endfor %}
+
+
+            ],
+            buildPlaylist = $.each(tracks, function(key, value) {
+                var trackNumber = value.track,
+                    trackName = value.name,
+                    trackDuration = value.duration;
+                if (trackNumber.toString().length === 1) {
+                    trackNumber = '0' + trackNumber;
+                }
+                $('#plList').append('<li> \
+                    <div class="plItem"> \
+                        <span class="plNum">' + trackNumber + '.</span> \
+                        <span class="plTitle">' + trackName + '</span> \
+                    </div> \
+                </li>');
+            }),
+            trackCount = tracks.length,
+            npAction = $('#npAction'),
+            npTitle = $('#npTitle'),
+            audio = $('#audio1').on('play', function () {
+                playing = true;
+                npAction.text('Now Playing...');
+            }).on('pause', function () {
+                playing = false;
+                npAction.text('Paused...');
+            }).on('ended', function () {
+                npAction.text('Paused...');
+                if ((index + 1) < trackCount) {
+                    index++;
+                    loadTrack(index);
+                    audio.play();
+                } else {
+                    audio.pause();
+                    index = 0;
+                    loadTrack(index);
+                }
+            }).get(0),
+            btnPrev = $('#btnPrev').on('click', function () {
+                if ((index - 1) > -1) {
+                    index--;
+                    loadTrack(index);
+                    if (playing) {
+                        audio.play();
+                    }
+                } else {
+                    audio.pause();
+                    index = 0;
+                    loadTrack(index);
+                }
+            }),
+            btnNext = $('#btnNext').on('click', function () {
+                if ((index + 1) < trackCount) {
+                    index++;
+                    loadTrack(index);
+                    if (playing) {
+                        audio.play();
+                    }
+                } else {
+                    audio.pause();
+                    index = 0;
+                    loadTrack(index);
+                }
+            }),
+            li = $('#plList li').on('click', function () {
+                var id = parseInt($(this).index());
+                if (id !== index) {
+                    playTrack(id);
+                }
+            }),
+            loadTrack = function (id) {
+                $('.plSel').removeClass('plSel');
+                $('#plList li:eq(' + id + ')').addClass('plSel');
+                npTitle.text(tracks[id].name);
+                index = id;
+                audio.src = mediaPath + tracks[id].file + extension;
+                updateDownload(id, audio.src);
+            },
+            updateDownload = function (id, source) {
+                player.on('loadedmetadata', function () {
+                    $('a[data-plyr="download"]').attr('href', source);
+                });
+            },
+            playTrack = function (id) {
+                loadTrack(id);
+                audio.play();
+            };
+        extension = audio.canPlayType('audio/mpeg') ? '.mp3' : audio.canPlayType('audio/ogg') ? '.ogg' : '';
+        loadTrack(index);
+    } else {
+        // no audio support
+        $('.column').addClass('hidden');
+        var noSupport = $('#audio1').text();
+        $('.container').append('<p class="no-support">' + noSupport + '</p>');
+    }
+});
+
+        </script>
     </head>
-    <body style="background-color:white; padding:10px 15px 10px 15px">
+    <body>
         <div class="container-fluid">
             <hr>
-			<div class="dropdown pull-right" style="transform: translate(0%,-20%);">
-				<button class="btn dropdown-toggle pull-right" type="button" data-toggle="dropdown"><span style="padding-right:5px" class="glyphicon glyphicon-cog"></span>Options
-				<span class="caret"></span></button>
-				<ul class="dropdown-menu">
+            <div class="modal fade" id="myModal" role="dialog">
+				<div class="modal-dialog">
+				
+				<div class="modal-content" style="background-color: black; border-width:2px; border-color:rgb(22, 22, 54);">
+					<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Add Songs</h4>
+					</div>
+					<div class="modal-body">					
+                        <form enctype="multipart/form-data" method="POST">
+                            {% csrf_token %}
+                            {{form.as_p}}
+                            <input type="hidden" value="1" name="songup">
+                            <input id="id_add_song" type="submit" value="Upload Song">
+                        </form>
+					</div>
+					<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Dismiss</button>
+					</div>
+				</div>
+				
+				</div>
+			</div>
+            <button type="button" class="btn btn-info pull-right" data-toggle="modal" data-target="#myModal" style="transform: translate(-190%,-20%);"><span style="padding-right:5px" class="glyphicon glyphicon-headphones"></span>Add Songs</button>
+            <a href="{% url 'login_module:logout' %}"><button type="button" style="transform: translate(100%,-20%);" class="btn btn-danger pull-right" ><span class="glyphicon glyphicon-off"></span>    Log Out </button></a>
+            <a href="{% url 'core_app:user_profile' %}"><button type="button" style="transform: translate(100%,-20%);" class="btn btn-success pull-right" ><span class="glyphicon glyphicon-user"></span>    Profile </button></a>
+				<!--<ul class="dropdown-menu">
 				  <li><a href="{% url 'core_app:user_profile' %}"><span class="glyphicon glyphicon-user"></span>     Profile</a></li>
-				  <li><a>feature1</a></li>
-				  <li><a>feature2</a></li>
 				  <li class="divider"></li>
 				  <li><a href="{% url 'login_module:logout' %}"><span class="glyphicon glyphicon-off"></span>    Log Out </a></li>
-				</ul>
-			</div>
+				</ul>-->
 			<h4>Welcome, {{my_user.first_name}}</h4>
             <hr>
         <p></p>
             <div class="col-md-4">
                 <div class="row" style="margin-bottom:25px; border-radius:3px; border-color:red">
-                <h4 style="margin-bottom:30px">Add Songs</h4>
+                <!--<h4 style="margin-bottom:30px">Add Songs</h4>
                   <form enctype="multipart/form-data" method="POST">
                       {% csrf_token %}
                       {{form.as_p}}
                       <input type="hidden" value="1" name="songup">
                       <input type="submit" value="Upload Song">
-                  </form>
+                  </form>-->
                 </div>
                 <br><br><br>
-                <div class="row">
-                    <h4 style="margin-bottom:30px">Add Playlist</h4>
-
-                </div>
             </div>
             <div class="col-md-4">
-                <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo1">View Songs</button>
-                <div id="demo1" class="collapse">
-
-        {% if songs_list %}
-        <div class='card-columns'>
-        {% for song in songs_list %}
-            <div class='card'>
-                <div class='card-body'>
-                    <h4 class='card-title'>
-                        <audio controls>
-                            <source src="{{song.songFile.url}}">
-                        </audio>
-                    </h4>
-                </div>
+                    {% if songs_list %}
+                        <div class="container">
+                            <div class="column add-bottom">
+                                <div id="mainwrap">
+                                    <div id="nowPlay">
+                                        <span id="npAction">Paused...</span><span id="npTitle"></span>
+                                    </div>
+                                    <div id="audiowrap">
+                                        <div id="audio0">
+                                            <audio id="audio1" preload controls>Your browser does not support HTML5 Audio! 😢</audio>
+                                        </div>
+                                        <div id="tracks">
+                                            <a id="btnPrev">&larr;</a><a id="btnNext">&rarr;</a>
+                                        </div>
+                                    </div>
+                                    <div id="plwrap">
+                                        <ul id="plList"></ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% else %}
+                        <p>No songs uploaded</p>
+                    {% endif %}
             </div>
-            {% endfor %}
         </div>
-        {% else %}
-            <p>No songs uploaded</p>
-        {% endif %}
-        </div>
-            </div>
-        </div>
-
     </body>
 </html>
