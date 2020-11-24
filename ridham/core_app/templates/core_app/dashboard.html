@@ -43,11 +43,19 @@
         <p id="messages"> {{message}} </p>
         {% endfor %}-->
         {% if songs_list %}
-            <ul>
-                {% for song in songs_list %}
-                    <li><a href="{{ song.songLink }}">{{ song.songName }}</a></li>
-                {% endfor %}
-            </ul>
+        <div class='card-columns'>
+        {% for song in songs_list %}
+            <div class='card'>
+                <div class='card-body'>
+                    <h4 class='card-title'>
+                        <audio controls>
+                            <source src="{{song.songFile.url}}">
+                        </audio>
+                    </h4>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
         {% else %}
             <p>No songs uploaded</p>
         {% endif %}

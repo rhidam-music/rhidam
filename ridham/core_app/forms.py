@@ -17,4 +17,4 @@ class UserChangeForm(forms.ModelForm):
 class SongUploadForm(forms.ModelForm):
     class Meta:
         model = Song
-        fields = ['songName', 'songLink']
+        fields = ['songName', 'songFile']

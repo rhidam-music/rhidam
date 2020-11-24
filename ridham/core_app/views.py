@@ -6,6 +6,9 @@ from login_module.models import Profile
 
 from .forms import SongUploadForm, ProfileChangeForm, UserChangeForm
 from .models import Song
+import random
+import string
+import os
 
 @login_required
 def user_profile(request):
@@ -35,13 +38,20 @@ def HomepageView(request):
     return render(request, 'core_app/Homepage.html')
     pass
 
+def generate_slug():
+    letters = string.ascii_lowercase
+    result = ''.join(random.choice(letters) for i in range(10))
+    while len(Song.objects.filter(songSlug=result)) != 0:
+        result = ''.join(random.choice(letters) for i in range(10))
+    return result
+
+
 @login_required
 def dashboard(request):
     form = SongUploadForm()
     a = User.objects.filter(username=request.user)[0]
     user = Profile.objects.filter(user=a)[0]
     songs_list = Song.objects.filter(owner=user)
-    # print(request.user.profile.profile_pic)
     
     context = {
         'form' : form,
@@ -50,18 +60,21 @@ def dashboard(request):
     }
 
     if request.method == 'POST':
-        try:
-            songUploaded = request.POST['songup']
-            if songUploaded == '1':
-                form = SongUploadForm(request.POST)
-                if form.is_valid():
-                    a = User.objects.filter(username=request.user)[0]
-                    user = Profile.objects.filter(user=a)[0]
-                    new_song = Song(owner=user, songLink=request.POST['songLink'], songName=request.POST['songName'])
-                    new_song.save()
-                    messages.success(request, "Song successfully uploaded")
-                return redirect('core_app:dashboard')
-        except:
-            pass
+        songUploaded = request.POST['songup']
+        if songUploaded == '1':
+            form = SongUploadForm(request.POST, request.FILES)
+            if form.is_valid():
+                a = User.objects.filter(username=request.user)[0]
+                user = Profile.objects.filter(user=a)[0]
+                audio_data = request.FILES['songFile']
+                slug = generate_slug()
+                audio_data.name = slug + '.mp3'
+                new_song = Song(owner=user, songName=request.POST['songName'], songSlug=slug, songFile=audio_data)
+                new_song.save()
+
+                
+
+                messages.success(request, "Song successfully uploaded")
+            return redirect('core_app:dashboard')
     return render(request, 'core_app/dashboard.html', context=context)
             
